@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Спорт · ЗОЖ · Традиции</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(145deg, #f0f7f2 0%, #dae9e0 100%);
+            color: #1e3a2e;
+            line-height: 1.5;
+            padding: 1.5rem 1rem 3rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Шапка */
+        .hero {
+            background: linear-gradient(120deg, #1b4d3e, #2a6b5a);
+            color: #f4f9f6;
+            padding: 2rem 1.5rem;
+            border-radius: 3rem 3rem 2rem 2rem;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 15px 25px -10px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::after {
+            content: "💪🏃🌿";
+            position: absolute;
+            right: 1rem;
+            bottom: 0.5rem;
+            font-size: 3rem;
+            opacity: 0.2;
+            pointer-events: none;
+        }
+
+        .hero h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            max-width: 70%;
+            opacity: 0.9;
+        }
+
+        /* Секции */
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin: 2.5rem 0 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            color: #0e3d2e;
+            border-left: 8px solid #4f9e7a;
+            padding-left: 1rem;
+        }
+
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .game-card {
+            background: #ffffffd9;
+            backdrop-filter: blur(4px);
+            border-radius: 2rem;
+            padding: 1.5rem 1.2rem 1.2rem;
+            box-shadow: 0 10px 20px -8px rgba(0,30,20,0.25);
+            transition: transform 0.15s;
+            border: 1px solid #b8d9cc;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .game-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .game-card h3 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #1a4d3b;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .game-area {
+            background: #e3f0ea;
+            border-radius: 1.5rem;
+            padding: 1rem;
+            margin: 0.8rem 0;
+            text-align: center;
+            min-height: 140px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border: 1px dashed #6b9e88;
+        }
+
+        .game-btn {
+            background: #2a6b5a;
+            color: white;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 3rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+            box-shadow: 0 4px 8px rgba(0,40,20,0.2);
+            margin-top: 0.4rem;
+        }
+
+        .game-btn:hover {
+            background: #1e5142;
+        }
+
+        .game-btn:active {
+            transform: scale(0.96);
+        }
+
+        .game-btn:disabled {
+            background: #a0b9ae;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .result-text {
+            font-weight: 600;
+            margin: 0.5rem 0;
+            font-size: 1rem;
+            color: #1b4d3e;
+        }
+
+        /* Найди пару */
+        .memory-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 6px;
+            width: 100%;
+            max-width: 240px;
+            margin: 0 auto 0.6rem;
+        }
+
+        .memory-card {
+            aspect-ratio: 1;
+            font-size: 1.3rem;
+            background: #2a6b5a;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: inherit;
+        }
+
+        .memory-card.flipped {
+            background: #f0f7f2;
+            color: #1e3a2e;
+        }
+
+        .memory-card.matched {
+            background: #a8d5c0;
+            color: #103d2e;
+            cursor: default;
+        }
+
+        /* Тир */
+        .shoot-field {
+            position: relative;
+            display: block;
+            padding: 0;
+            overflow: hidden;
+            min-height: 190px;
+            height: 190px;
+        }
+
+        .shoot-target {
+            position: absolute;
+            background: transparent;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            padding: 4px;
+            line-height: 1;
+            transition: transform 0.1s;
+            user-select: none;
+        }
+
+        .shoot-target:active {
+            transform: scale(0.8);
+        }
+
+        #shootResult {
+            position: absolute;
+            bottom: 6px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-weight: 600;
+            color: #103d2e;
+            font-size: 0.9rem;
+            pointer-events: none;
+        }
+
+        /* Поймай искру */
+        .spark-field {
+            position: relative;
+            display: block;
+            padding: 0;
+            overflow: hidden;
+            min-height: 190px;
+            height: 190px;
+            background: linear-gradient(180deg, #d5e9dc 0%, #c2dfd2 60%, #a8cdb8 100%);
+        }
+
+        #spark {
+            position: absolute;
+            font-size: 2rem;
+            cursor: pointer;
+            user-select: none;
+            transition: left 0.3s ease, top 0.3s ease;
+            filter: drop-shadow(0 0 6px rgba(255,220,100,0.8));
+        }
+
+        #spark:active {
+            transform: scale(0.85);
+        }
+
+        #sparkResult {
+            position: absolute;
+            bottom: 6px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-weight: 600;
+            color: #103d2e;
+            font-size: 0.9rem;
+            pointer-events: none;
+        }
+
+        /* ========== ВИКТОРИНА ========== */
+        .quiz-section {
+            background: #fff;
+            border-radius: 2rem;
+            padding: 1.8rem;
+            box-shadow: 0 10px 20px -8px rgba(0,30,20,0.2);
+            border: 1px solid #b8d9cc;
+            margin: 1.5rem 0 2.5rem;
+        }
+
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.2rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 2px solid #cde3d9;
+            font-weight: 600;
+            color: #1a4d3b;
+            font-size: 1rem;
+            flex-wrap: wrap;
+        }
+
+        #quizProgress {
+            background: #e3f0ea;
+            padding: 0.35rem 0.9rem;
+            border-radius: 20px;
+        }
+
+        #quizScore {
+            background: #d4ecdf;
+            padding: 0.35rem 0.9rem;
+            border-radius: 20px;
+            color: #1e5142;
+        }
+
+        .quiz-question {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: #103d2e;
+            margin-bottom: 1.2rem;
+            line-height: 1.4;
+        }
+
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+
+        .quiz-option {
+            background: #e3f0ea;
+            border: 1.5px solid #6b9e88;
+            padding: 0.85rem 1.1rem;
+            border-radius: 14px;
+            cursor: pointer;
+            font-size: 1rem;
+            text-align: left;
+            color: #1e3a2e;
+            font-family: inherit;
+            transition: background 0.15s, border-color 0.15s, transform 0.1s;
+            line-height: 1.3;
+        }
+
+        .quiz-option:hover:not(:disabled) {
+            background: #c2dfd2;
+            border-color: #2a6b5a;
+        }
+
+        .quiz-option:active:not(:disabled) {
+            transform: scale(0.99);
+        }
+
+        .quiz-option:disabled {
+            cursor: not-allowed;
+        }
+
+        .quiz-option.correct {
+            background: #b6e6c9;
+            border-color: #2e8b57;
+            color: #0d3d1f;
+            font-weight: 600;
+        }
+
+        .quiz-option.wrong {
+            background: #f5c6c6;
+            border-color: #c0392b;
+            color: #5a1a1a;
+            font-weight: 600;
+        }
+
+        .quiz-next {
+            margin-top: 1.2rem;
+            text-align: right;
+        }
+
+        .quiz-result {
+            text-align: center;
+            padding: 1.5rem 1rem;
+        }
+
+        .quiz-result .percent {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: #2a6b5a;
+            line-height: 1;
+            margin: 0.5rem 0;
+        }
+
+        .quiz-message {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: #1a4d3b;
+            margin-top: 0.5rem;
+        }
+
+        /* Карточки фактов */
+        .facts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0 2.5rem;
+        }
+
+        .fact-card {
+            background: #ffffff;
+            border-radius: 2rem;
+            padding: 1.5rem;
+            box-shadow: 0 8px 16px -6px rgba(0,0,0,0.08);
+            border: 1px solid #cde3d9;
+            position: relative;
+        }
+
+        .fact-card::before {
+            content: "💡";
+            position: absolute;
+            top: -0.8rem;
+            left: 1.2rem;
+            font-size: 1.8rem;
+            background: #fff;
+            padding: 0 0.3rem;
+            border-radius: 50%;
+        }
+
+        .fact-card h4 {
+            font-size: 1.2rem;
+            color: #266e57;
+            margin-bottom: 0.8rem;
+            border-bottom: 2px solid #a8d5c0;
+            padding-bottom: 0.4rem;
+        }
+
+        .fact-card p {
+            margin-bottom: 0.6rem;
+            font-size: 0.95rem;
+            color: #1e3a2e;
+        }
+
+        .fact-card small {
+            display: block;
+            color: #4e6b5e;
+            font-style: italic;
+            margin-top: 0.5rem;
+            border-left: 3px solid #7fb09a;
+            padding-left: 0.8rem;
+            font-size: 0.85rem;
+        }
+
+        /* Цитаты */
+        .quote-block {
+            background: linear-gradient(135deg, #d9ebe2 0%, #c2dfd2 100%);
+            border-radius: 2rem;
+            padding: 1.8rem 2rem;
+            margin: 2rem 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.8rem;
+            align-items: center;
+            border: 1px solid #a3c9b6;
+            box-shadow: 0 8px 18px -8px rgba(20,60,40,0.2);
+        }
+
+        .quote-emoji {
+            font-size: 3.5rem;
+            line-height: 1;
+        }
+
+        .quote-text {
+            flex: 1;
+            font-size: 1.2rem;
+            font-weight: 500;
+            font-style: italic;
+            color: #103d2e;
+            position: relative;
+        }
+
+        .quote-text::before {
+            content: "“";
+            font-size: 3rem;
+            position: absolute;
+            left: -0.8rem;
+            top: -1rem;
+            opacity: 0.3;
+            font-family: serif;
+        }
+
+        .quote-author {
+            font-size: 0.9rem;
+            font-style: normal;
+            font-weight: 400;
+            color: #2d5d49;
+            margin-top: 0.3rem;
+            display: block;
+            text-align: right;
+        }
+
+        /* Картинки-градиенты */
+        .pic-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .pic-item {
+            flex: 1 1 160px;
+            height: 100px;
+            border-radius: 2rem;
+            background-size: cover;
+            background-position: center;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: flex-end;
+            justify-content: flex-start;
+            padding: 0.8rem;
+            color: white;
+            font-weight: 600;
+            text-shadow: 0 2px 6px rgba(0,0,0,0.5);
+            font-size: 0.95rem;
+            border: 2px solid white;
+        }
+
+        .pic1 { background: linear-gradient(135deg, #2c5e4a, #6c9e7e); }
+        .pic2 { background: linear-gradient(135deg, #a7774b, #d9b382); }
+        .pic3 { background: linear-gradient(135deg, #3b6b8b, #7fa9c2); }
+        .pic4 { background: linear-gradient(135deg, #6a4e3a, #b38b6d); }
+        .pic5 { background: linear-gradient(135deg, #1e4d4d, #4b8b8b); }
+        .pic6 { background: linear-gradient(135deg, #9e6b4b, #cfa37a); }
+
+        footer {
+            text-align: center;
+            margin-top: 3.5rem;
+            color: #4b6b5e;
+            font-size: 0.9rem;
+            border-top: 1px solid #b8d9cc;
+            padding-top: 1.5rem;
+        }
+
+        @media (max-width: 600px) {
+            .hero p { max-width: 100%; }
+            .hero h1 { font-size: 1.7rem; }
+            .quote-block { flex-direction: column; text-align: center; }
+            .quote-text::before { display: none; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- Шапка -->
+    <div class="hero">
+        <h1>Спорт · ЗОЖ · Традиции</h1>
+        <p>Играй в простые интерактивные игры, узнавай факты о здоровом образе жизни и традициях Севера.</p>
+    </div>
+
+    <!-- ИНТЕРАКТИВНЫЕ ИГРЫ -->
+    <div class="section-title">🎮 Интерактивные игры</div>
+    <div class="game-grid">
+
+        <!-- ИГРА 1: Найди пару -->
+        <div class="game-card">
+            <h3>🧠 Найди пару</h3>
+            <p style="font-size:0.9rem; margin-bottom:0.3rem;">Открой все карточки и найди 4 пары спортивных эмодзи.</p>
+            <div class="game-area" style="min-height: 200px;">
+                <div class="memory-grid" id="memoryGrid"></div>
+                <div class="result-text" id="memoryResult">Найди все пары</div>
+                <button class="game-btn" id="memoryReset">Заново</button>
+            </div>
+        </div>
+
+        <!-- ИГРА 2: Тир -->
+        <div class="game-card">
+            <h3>🎯 Тир</h3>
+            <p style="font-size:0.9rem; margin-bottom:0.3rem;">За 10 секунд попади по мишеням как можно больше раз!</p>
+            <div class="game-area shoot-field" id="shootField">
+                <div id="shootResult">Нажми «Старт»</div>
+            </div>
+            <button class="game-btn" id="shootStart">Старт</button>
+        </div>
+
+        <!-- ИГРА 3: Поймай искру -->
+        <div class="game-card">
+            <h3>✨ Поймай искру</h3>
+            <p style="font-size:0.9rem; margin-bottom:0.3rem;">Искра энергии прыгает по полю — поймай её 5 раз!</p>
+            <div class="game-area spark-field" id="sparkField">
+                <div id="spark">✨</div>
+                <div id="sparkResult">Нажми «Старт»</div>
+            </div>
+            <button class="game-btn" id="sparkStart">Старт</button>
+        </div>
+    </div>
+
+    <!-- ВИКТОРИНА -->
+    <div class="section-title">📋 Викторина: физическое развитие в ДОУ (ФГОС ДО)</div>
+    <div class="quiz-section">
+        <div class="quiz-header">
+            <span id="quizProgress">Вопрос 1 из 12</span>
+            <span id="quizScore">Правильно: 0</span>
+        </div>
+        <div class="quiz-body" id="quizBody"></div>
+    </div>
+
+    <!-- КАРТИНКИ -->
+    <div class="pic-row">
+        <div class="pic-item pic1">🏔️ Северная природа</div>
+        <div class="pic-item pic2">🦌 Оленеводство</div>
+        <div class="pic-item pic3">🎿 Лыжный спорт</div>
+        <div class="pic-item pic4">🛷 Нарты</div>
+        <div class="pic-item pic5">🌿 ЗОЖ</div>
+        <div class="pic-item pic6">🏹 Традиции</div>
+    </div>
+
+    <!-- ЦИТАТЫ -->
+    <div class="section-title">📜 Цитаты о движении и традициях</div>
+
+    <div class="quote-block">
+        <div class="quote-emoji">💪</div>
+        <div class="quote-text">
+            «В здоровом теле — здоровый дух».<br>
+            Движение — это жизнь, а традиции предков учат нас быть сильными и ловкими.<br>
+            <span class="quote-author">— народная мудрость</span>
+        </div>
+    </div>
+
+    <div class="quote-block">
+        <div class="quote-emoji">🌲</div>
+        <div class="quote-text">
+            «Сухощавый человек не стареет», — говорили коми.<br>
+            Умеренность в еде и постоянная активность сохраняют силу до глубокой старости.<br>
+            <span class="quote-author">— коми пословица</span>
+        </div>
+    </div>
+
+    <div class="quote-block">
+        <div class="quote-emoji">❤️</div>
+        <div class="quote-text">
+            Сердце тренированного человека делает те же 100 000 ударов,<br>
+            но не за сутки, а за 36 часов. Двигайся — и сердце скажет спасибо!<br>
+            <span class="quote-author">— факт о ЗОЖ</span>
+        </div>
+    </div>
+
+    <!-- ФАКТЫ -->
+    <div class="section-title">✨ Интересные факты</div>
+
+    <div class="facts-grid">
+        <div class="fact-card">
+            <h4>🏃 Физкультура и ЗОЖ</h4>
+            <p>🔹 Словосочетание «физическая культура» придумали в Англии во второй половине XIX века. А самое эффективное время для тренировок — с 16 до 19 часов.</p>
+            <p>🔹 30-минутная пробежка или быстрая прогулка 3–4 раза в неделю по эффективности сопоставима с приёмом лёгких антидепрессантов — без побочных эффектов.</p>
+            <small>Регулярность важнее интенсивности: даже 15 минут активности в день снижают риск сердечно-сосудистых заболеваний.</small>
+        </div>
+
+        <div class="fact-card">
+            <h4>🛷 Нарты</h4>
+            <p>🔹 У коми нарты были не только транспортным средством, но и спортивным снарядом: на них устраивали гонки, а груз распределяли так, чтобы сохранять равновесие на льду и снегу.</p>
+            <p>🔹 Традиционная одежда оленевода не стесняла движений и помогала равномерно распределять груз по спине — это настоящая эргономика прошлого.</p>
+            <small>«Тяжелее себя не поднимай» — учили коми детей, чтобы избежать травм.</small>
+        </div>
+
+        <div class="fact-card">
+            <h4>🌑 Метание тени</h4>
+            <p>🔹 Игры на точность у северных народов развивали глазомер и координацию — навыки, необходимые на охоте и в оленеводстве.</p>
+            <p>🔹 Метание тени — символическая забава: нужно «попасть» в тень зверя или соперника, тренируя реакцию и внимание.</p>
+            <small>Точность и ловкость ценились у коми с детства: «Как глаза бережёшь, так и себя береги».</small>
+        </div>
+
+        <div class="fact-card">
+            <h4>🎿 Лыжи</h4>
+            <p>🔹 Лыжи были жизненной необходимостью: без них не обходились ни охота, ни зимние переходы. Сегодня это ещё и отличный способ тренировки выносливости.</p>
+            <p>🔹 ВОЗ рекомендует 150 минут умеренной активности в неделю — лыжная прогулка в спокойном темпе идеально вписывается в эту норму.</p>
+            <small>«Без труда и щепки не перевернёшь» — коми пословица о пользе движения.</small>
+        </div>
+
+        <div class="fact-card">
+            <h4>🦌 Гонки на оленях</h4>
+            <p>🔹 Оленеводы-ижемцы включали в рацион оленину и рыбу — источники белка и жира, необходимые в экстремальных условиях Севера.</p>
+            <p>🔹 Гонки на оленях — не только спорт, но и проверка выносливости животного и наездника. Это древняя традиция, сохранившаяся до наших дней.</p>
+            <small>«На молоке-мясе жить» — у коми означало сытую, здоровую жизнь.</small>
+        </div>
+    </div>
+
+    <div class="quote-block">
+        <div class="quote-emoji">🏅</div>
+        <div class="quote-text">
+            «Спящего ради еды не буди, как проспится, поест. А сонный поест — так на пользу не пойдёт».<br>
+            Полноценный отдых так же важен для здоровья, как и движение.<br>
+            <span class="quote-author">— коми народная мудрость</span>
+        </div>
+    </div>
+
+    <footer>
+        ⚡ Играй, двигайся, узнавай традиции Севера. Здоровье — это путь, а не цель.
+    </footer>
+</div>
+
+<script>
+    (function() {
+
+        /* ---------- ИГРА 1: НАЙДИ ПАРУ ---------- */
+        const memoryGrid = document.getElementById('memoryGrid');
+        const memoryResult = document.getElementById('memoryResult');
+        const memoryReset = document.getElementById('memoryReset');
+        const memoryEmojis = ['🏃', '🚴', '🏊', '🤸'];
+
+        let memoryFlipped = [];
+        let memoryMatched = 0;
+        let memoryLocked = false;
+
+        function initMemory() {
+            const cards = [...memoryEmojis, ...memoryEmojis];
+            for (let i = cards.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [cards[i], cards[j]] = [cards[j], cards[i]];
+            }
+            memoryFlipped = [];
+            memoryMatched = 0;
+            memoryLocked = false;
+            memoryResult.textContent = 'Найди все пары';
+
+            memoryGrid.innerHTML = '';
+            cards.forEach((emoji) => {
+                const card = document.createElement('button');
+                card.className = 'memory-card';
+                card.textContent = '?';
+                card.dataset.emoji = emoji;
+                card.addEventListener('click', () => flipCard(card));
+                memoryGrid.appendChild(card);
+            });
+        }
+
+        function flipCard(card) {
+            if (memoryLocked) return;
+            if (card.classList.contains('flipped') || card.classList.contains('matched')) return;
+
+            card.classList.add('flipped');
+            card.textContent = card.dataset.emoji;
+            memoryFlipped.push(card);
+
+            if (memoryFlipped.length === 2) {
+                memoryLocked = true;
+                const [a, b] = memoryFlipped;
+
+                if (a.dataset.emoji === b.dataset.emoji) {
+                    a.classList.add('matched');
+                    b.classList.add('matched');
+                    memoryMatched++;
+                    memoryFlipped = [];
+                    memoryLocked = false;
+
+                    if (memoryMatched === memoryEmojis.length) {
+                        memoryResult.textContent = '🎉 Все пары найдены! Молодец!';
+                    }
+                } else {
+                    setTimeout(() => {
+                        a.classList.remove('flipped');
+                        b.classList.remove('flipped');
+                        a.textContent = '?';
+                        b.textContent = '?';
+                        memoryFlipped = [];
+                        memoryLocked = false;
+                    }, 800);
+                }
+            }
+        }
+
+        memoryReset.addEventListener('click', initMemory);
+        initMemory();
+
+        /* ---------- ИГРА 2: ТИР ---------- */
+        const shootField = document.getElementById('shootField');
+        const shootResult = document.getElementById('shootResult');
+        const shootStart = document.getElementById('shootStart');
+
+        let shootActive = false;
+        let shootScore = 0;
+        let shootTarget = null;
+        let shootTimer = null;
+
+        function spawnTarget() {
+            if (!shootActive) return;
+            if (shootTarget) {
+                shootTarget.remove();
+                shootTarget = null;
+            }
+
+            const target = document.createElement('button');
+            target.className = 'shoot-target';
+            target.textContent = '🎯';
+
+            const fw = shootField.clientWidth;
+            const fh = shootField.clientHeight;
+            target.style.left = (10 + Math.random() * Math.max(10, fw - 60)) + 'px';
+            target.style.top = (10 + Math.random() * Math.max(10, fh - 70)) + 'px';
+
+            target.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (!shootActive) return;
+                shootScore++;
+                shootResult.textContent = 'Очки: ' + shootScore;
+                target.remove();
+                if (shootTarget === target) {
+                    shootTarget = null;
+                    spawnTarget();
+                }
+            });
+
+            shootField.appendChild(target);
+            shootTarget = target;
+
+            setTimeout(() => {
+                if (target.parentNode && shootActive) {
+                    target.remove();
+                    if (shootTarget === target) {
+                        shootTarget = null;
+                        spawnTarget();
+                    }
+                }
+            }, 1200);
+        }
+
+        function startShoot() {
+            shootActive = true;
+            shootScore = 0;
+            shootStart.disabled = true;
+            shootResult.textContent = 'Очки: 0';
+            if (shootTarget) {
+                shootTarget.remove();
+                shootTarget = null;
+            }
+            spawnTarget();
+
+            shootTimer = setTimeout(() => {
+                shootActive = false;
+                if (shootTarget) {
+                    shootTarget.remove();
+                    shootTarget = null;
+                }
+                shootResult.textContent = 'Игра окончена! Очки: ' + shootScore;
+                shootStart.disabled = false;
+            }, 10000);
+        }
+
+        shootStart.addEventListener('click', startShoot);
+
+        /* ---------- ИГРА 3: ПОЙМАЙ ИСКРУ ---------- */
+        const sparkField = document.getElementById('sparkField');
+        const spark = document.getElementById('spark');
+        const sparkResult = document.getElementById('sparkResult');
+        const sparkStart = document.getElementById('sparkStart');
+
+        let sparkCount = 0;
+        const sparkGoal = 5;
+        let sparkActive = false;
+        let sparkInterval = null;
+
+        function moveSpark() {
+            const fw = sparkField.clientWidth;
+            const fh = sparkField.clientHeight;
+            spark.style.left = (10 + Math.random() * Math.max(10, fw - 50)) + 'px';
+            spark.style.top = (10 + Math.random() * Math.max(10, fh - 60)) + 'px';
+        }
+
+        function startSpark() {
+            sparkCount = 0;
+            sparkActive = true;
+            sparkStart.disabled = true;
+            spark.style.display = 'block';
+            spark.style.opacity = '1';
+            spark.style.pointerEvents = 'auto';
+            sparkResult.textContent = 'Поймано: 0 / ' + sparkGoal;
+
+            spark.style.left = '50%';
+            spark.style.top = '40%';
+            setTimeout(moveSpark, 60);
+
+            if (sparkInterval) clearInterval(sparkInterval);
+            sparkInterval = setInterval(() => {
+                if (sparkActive) moveSpark();
+            }, 900);
+        }
+
+        spark.addEventListener('click', () => {
+            if (!sparkActive) return;
+            sparkCount++;
+            spark.style.transform = 'scale(0.7)';
+            setTimeout(() => spark.style.transform = 'scale(1)', 100);
+
+            if (sparkCount >= sparkGoal) {
+                sparkActive = false;
+                if (sparkInterval) clearInterval(sparkInterval);
+                spark.style.pointerEvents = 'none';
+                spark.style.opacity = '0.5';
+                sparkResult.textContent = '🎉 Поймал все искры! Отличная реакция!';
+                sparkStart.disabled = false;
+            } else {
+                sparkResult.textContent = 'Поймано: ' + sparkCount + ' / ' + sparkGoal;
+                moveSpark();
+            }
+        });
+
+        sparkStart.addEventListener('click', startSpark);
+
+        spark.style.left = '50%';
+        spark.style.top = '40%';
+
+        /* ============================================================
+           ВИКТОРИНА: физическое развитие в ДОУ (ФГОС ДО)
+           12 вопросов, от простого к сложному
+           ============================================================ */
+        const quizData = [
+            {
+                q: '1. Какое движение является основным?',
+                options: ['Лазание по канату', 'Ходьба', 'Прыжки в высоту'],
+                correct: 1
+            },
+            {
+                q: '2. Что проводится ежедневно утром в детском саду?',
+                options: ['Физкультурное занятие', 'Спортивный праздник', 'Утренняя гимнастика'],
+                correct: 2
+            },
+            {
+                q: '3. Сколько раз в неделю проводятся физкультурные занятия в ДОУ?',
+                options: ['1 раз', '2–3 раза', '5 раз'],
+                correct: 1
+            },
+            {
+                q: '4. Какая игра развивает двигательную активность?',
+                options: ['Настольная игра', 'Подвижная игра', 'Дидактическая игра'],
+                correct: 1
+            },
+            {
+                q: '5. Что относится к основным движениям?',
+                options: ['Пение', 'Рисование', 'Бег'],
+                correct: 2
+            },
+            {
+                q: '6. Какова длительность физкультурного занятия в средней группе (4–5 лет)?',
+                options: ['15–20 минут', '25–30 минут', '35–40 минут'],
+                correct: 0
+            },
+            {
+                q: '7. Какая образовательная область по ФГОС ДО включает физическое развитие?',
+                options: ['Познавательное развитие', 'Речевое развитие', 'Физическое развитие'],
+                correct: 2
+            },
+            {
+                q: '8. Что такое физкультурный досуг?',
+                options: ['Вид занятия', 'Форма активного отдыха', 'Режимный момент'],
+                correct: 1
+            },
+            {
+                q: '9. Какой принцип предполагает постепенное увеличение нагрузки?',
+                options: ['Принцип наглядности', 'Принцип доступности', 'Принцип постепенности'],
+                correct: 2
+            },
+            {
+                q: '10. Какова цель физического воспитания в ДОУ по ФГОС?',
+                options: ['Подготовка к спортивным соревнованиям', 'Воспитание здорового, физически развитого ребёнка', 'Обучение плаванию'],
+                correct: 1
+            },
+            {
+                q: '11. Какой метод обучения движениям предполагает показ воспитателем?',
+                options: ['Наглядный', 'Словесный', 'Практический'],
+                correct: 0
+            },
+            {
+                q: '12. Что является показателем физической подготовленности дошкольника?',
+                options: ['Умение читать и писать', 'Знание правил дорожного движения', 'Сила, быстрота, выносливость, ловкость, гибкость'],
+                correct: 2
+            }
+        ];
+
+        const quizProgress = document.getElementById('quizProgress');
+        const quizScoreEl = document.getElementById('quizScore');
+        const quizBody = document.getElementById('quizBody');
+
+        let qIndex = 0;
+        let qScore = 0;
+        let qAnswered = false;
+
+        function renderQuiz() {
+            // Завершение
+            if (qIndex >= quizData.length) {
+                const total = quizData.length;
+                const percent = Math.round((qScore / total) * 100);
+
+                let emoji, message;
+                if (percent === 100) {
+                    emoji = '🏆';
+                    message = 'Отлично! Все ответы верны — 100%!';
+                } else if (percent >= 50) {
+                    emoji = '👍';
+                    message = 'Хороший результат, но нужно быть внимательнее!';
+                } else if (percent >= 30) {
+                    emoji = '📖';
+                    message = 'Неплохо, но стоит повторить материал.';
+                } else {
+                    emoji = '🔄';
+                    message = 'Ниже 30% — пройди тест снова!';
+                }
+
+                quizProgress.textContent = 'Викторина завершена';
+                quizScoreEl.textContent = `Правильно: ${qScore} из ${total}`;
+
+                quizBody.innerHTML = `
+                    <div class="quiz-result">
+                        <div style="font-size:3.5rem;">${emoji}</div>
+                        <div class="percent">${percent}%</div>
+                        <div class="quiz-message">${message}</div>
+                        <div style="margin-top:0.6rem; color:#4e6b5e;">
+                            Правильных ответов: <b>${qScore}</b> из ${total}
+                        </div>
+                        <button class="game-btn" id="quizReset" style="margin-top:1.2rem;">
+                            Пройти заново
+                        </button>
+                    </div>
+                `;
+
+                document.getElementById('quizReset').addEventListener('click', resetQuiz);
+                return;
+            }
+
+            // Текущий вопрос
+            const q = quizData[qIndex];
+            qAnswered = false;
+
+            quizProgress.textContent = `Вопрос ${qIndex + 1} из ${quizData.length}`;
+            quizScoreEl.textContent = `Правильно: ${qScore}`;
+
+            let html = `<div class="quiz-question">${q.q}</div><div class="quiz-options">`;
+            q.options.forEach((opt, i) => {
+                html += `<button class="quiz-option" data-index="${i}">${opt}</button>`;
+            });
+            html += '</div><div class="quiz-next" id="quizNextWrap"></div>';
+
+            quizBody.innerHTML = html;
+
+            quizBody.querySelectorAll('.quiz-option').forEach(btn => {
+                btn.addEventListener('click', () => selectAnswer(parseInt(btn.dataset.index, 10)));
+            });
+        }
+
+        function selectAnswer(selected) {
+            if (qAnswered) return;
+            qAnswered = true;
+
+            const q = quizData[qIndex];
+            const buttons = quizBody.querySelectorAll('.quiz-option');
+
+            buttons.forEach((btn, i) => {
+                btn.disabled = true;
+                if (i === q.correct) {
+                    btn.classList.add('correct'); // правильный — зелёный
+                }
+                if (i === selected && i !== q.correct) {
+                    btn.classList.add('wrong');   // выбранный неправильный — красный
+                }
+            });
+
+            if (selected === q.correct) {
+                qScore++;
+            }
+
+            quizScoreEl.textContent = `Правильно: ${qScore}`;
+
+            const nextWrap = document.getElementById('quizNextWrap');
+            const nextBtn = document.createElement('button');
+            nextBtn.className = 'game-btn';
+            nextBtn.textContent = (qIndex === quizData.length - 1)
+                ? 'Показать результат'
+                : 'Следующий вопрос →';
+
+            nextBtn.addEventListener('click', () => {
+                qIndex++;
+                renderQuiz();
+            });
+
+            nextWrap.appendChild(nextBtn);
+        }
+
+        function resetQuiz() {
+            qIndex = 0;
+            qScore = 0;
+            qAnswered = false;
+            renderQuiz();
+        }
+
+        renderQuiz();
+
+    })();
+</script>
+</body>
+</html>
